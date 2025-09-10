@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 transition-colors duration-300 font-inter">
+
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="bg-gray-800 dark:bg-gray-900 text-white w-64 p-4 space-y-4 transition-transform duration-300 transform -translate-x-full md:translate-x-0 fixed inset-y-0 left-0 z-50 shadow-lg">
+            <div class="flex items-center space-x-2 mb-8">
+                <i class="fa-solid fa-clipboard-user text-3xl text-blue-400"></i>
+                <h2 class="text-xl font-bold">Attendance</h2>
+            </div>
+            <nav class="space-y-2">
+                <a href="#dashboard" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-700 dark:hover:bg-gray-800 transition-colors duration-200">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#students" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-700 dark:hover:bg-gray-800 transition-colors duration-200 teacher-only">
+                    <i class="fa-solid fa-users"></i>
+                    <span>Students</span>
+                </a>
+                <a href="#reports" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-700 dark:hover:bg-gray-800 transition-colors duration-200 teacher-only">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span>Reports</span>
+                </a>
+                <a href="#add-student" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-700 dark:hover:bg-gray-800 transition-colors duration-200 teacher-only">
+                    <i class="fa-solid fa-user-plus"></i>
+                    <span>Add Student</span>
+                </a>
+            </nav>
+            <div class="absolute bottom-4 left-4 right-4">
+                <button id="logoutBtn" class="w-full flex items-center justify-center space-x-3 p-3 rounded-lg bg-red-500 hover:bg-red-600 transition-colors duration-200">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="flex-1 md:ml-64 transition-all duration-300 p-4 sm:p-6 lg:p-8">
+            <!-- Top Navbar -->
+            <header class="bg-white dark:bg-gray-800 shadow rounded-lg p-4 flex items-center justify-between mb-6">
+                <button id="sidebarToggle" class="md:hidden text-gray-800 dark:text-gray-200 text-2xl focus:outline-none">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <h1 id="pageTitle" class="text-2xl font-semibold text-gray-900 dark:text-white">Dashboard</h1>
+                <div class="flex items-center space-x-4">
+                    <span id="userName" class="text-gray-600 dark:text-gray-400 font-medium"></span>
+                    <button id="themeToggle" class="text-gray-600 dark:text-gray-400 focus:outline-none text-xl">
+                        <i class="fa-solid fa-sun dark:hidden"></i>
+                        <i class="fa-solid fa-moon hidden dark:inline"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <main id="content" class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg space-y-8">
+                <!-- Teacher Dashboard -->
+                <section id="teacherDashboard" class="hidden space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="bg-blue-500 text-white rounded-xl p-6 shadow-md transform transition-transform duration-300 hover:scale-105">
+                            <h3 class="text-lg font-medium opacity-80">Total Students</h3>
+                            <p id="totalStudentsCount" class="text-4xl font-bold mt-2"></p>
+                        </div>
+                        <div class="bg-green-500 text-white rounded-xl p-6 shadow-md transform transition-transform duration-300 hover:scale-105">
+                            <h3 class="text-lg font-medium opacity-80">Present Today</h3>
+                            <p id="presentCount" class="text-4xl font-bold mt-2"></p>
+                        </div>
+                        <div class="bg-red-500 text-white rounded-xl p-6 shadow-md transform transition-transform duration-300 hover:scale-105">
+                            <h3 class="text-lg font-medium opacity-80">Absent Today</h3>
+                            <p id="absentCount" class="text-4xl font-bold mt-2"></p>
+                        </div>
+                        <div class="bg-yellow-500 text-white rounded-xl p-6 shadow-md transform transition-transform duration-300 hover:scale-105">
+                            <h3 class="text-lg font-medium opacity-80">Late Today</h3>
+                            <p id="lateCount" class="text-4xl font-bold mt-2"></p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Student Dashboard -->
+                <section id="studentDashboard" class="hidden space-y-6">
+                    <div class="space-y-4">
+                        <div class="bg-blue-500 text-white rounded-xl p-6 shadow-md flex items-center justify-between">
+                            <div>
+                                <h3 class="text-lg font-medium opacity-80">My Attendance Percentage</h3>
+                                <p id="studentAttendancePercentage" class="text-4xl font-bold mt-2"></p>
+                            </div>
+                            <i class="fa-solid fa-percent text-5xl opacity-50"></i>
+                        </div>
+                        <div class="bg-gray-100 dark:bg-gray-900 rounded-xl p-6 shadow-md">
+                            <h3 class="text-xl font-semibold mb-4">My Attendance History</h3>
+                            <canvas id="studentAttendanceChart"></canvas>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Teacher Students Page -->
+                <section id="teacherStudents" class="hidden space-y-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 space-y-4 sm:space-y-0">
+                        <h2 class="text-2xl font-semibold">Students List</h2>
+                        <div class="flex items-center space-x-2">
+                            <input type="date" id="attendanceDate" class="rounded-lg border border-gray-300 dark:border-gray-600 px-4 py-2 bg-gray-50 dark:bg-gray-700">
+                            <button id="bulkMarkPresent" class="bg-green-500 text-white rounded-lg px-4 py-2 hover:bg-green-600 transition-colors duration-200">Mark All Present</button>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto rounded-lg shadow-md">
+                        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                            <thead class="bg-gray-50 dark:bg-gray-700">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Name</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Roll No.</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Class</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="studentsTableBody" class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                                <!-- Student rows will be injected here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Teacher Reports Page -->
+                <section id="teacherReports" class="hidden space-y-6">
+                    <h2 class="text-2xl font-semibold">Attendance Reports</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-gray-100 dark:bg-gray-900 rounded-xl p-6 shadow-md">
+                            <h3 class="text-xl font-semibold mb-4">Weekly Attendance</h3>
+                            <canvas id="weeklyAttendanceChart"></canvas>
+                        </div>
+                        <div class="bg-gray-100 dark:bg-gray-900 rounded-xl p-6 shadow-md">
+                            <h3 class="text-xl font-semibold mb-4">Monthly Attendance</h3>
+                            <canvas id="monthlyAttendanceChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="flex justify-end space-x-4 mt-6">
+                        <button id="exportCsvBtn" class="bg-blue-600 text-white rounded-lg px-4 py-2 hover:bg-blue-700 transition-colors duration-200">Export CSV</button>
+                        <button id="exportPdfBtn" class="bg-blue-600 text-white rounded-lg px-4 py-2 hover:bg-blue-700 transition-colors duration-200">Export PDF</button>
+                    </div>
+                </section>
+
+                <!-- Teacher Add Student Page -->
+                <section id="teacherAddStudent" class="hidden space-y-6">
+                    <h2 class="text-2xl font-semibold">Add New Student</h2>
+                    <form id="addStudentForm" class="space-y-4">
+                        <div>
+                            <label for="newStudentName" class="block text-sm font-medium">Name</label>
+                            <input type="text" id="newStudentName" class="mt-1 block w-full rounded-lg border border-gray-300 dark:border-gray-600 px-4 py-2 bg-gray-50 dark:bg-gray-700" required>
+                        </div>
+                        <div>
+                            <label for="newStudentEmail" class="block text-sm font-medium">Email</label>
+                            <input type="email" id="newStudentEmail" class="mt-1 block w-full rounded-lg border border-gray-300 dark:border-gray-600 px-4 py-2 bg-gray-50 dark:bg-gray-700" required>
+                        </div>
+                        <div>
+                            <label for="newStudentRollNo" class="block text-sm font-medium">Roll No.</label>
+                            <input type="text" id="newStudentRollNo" class="mt-1 block w-full rounded-lg border border-gray-300 dark:border-gray-600 px-4 py-2 bg-gray-50 dark:bg-gray-700" required>
+                        </div>
+                        <div>
+                            <label for="newStudentClass" class="block text-sm font-medium">Class</label>
+                            <input type="text" id="newStudentClass" class="mt-1 block w-full rounded-lg border border-gray-300 dark:border-gray-600 px-4 py-2 bg-gray-50 dark:bg-gray-700" required>
+                        </div>
+                        <div>
+                            <label for="newStudentContact" class="block text-sm font-medium">Contact</label>
+                            <input type="text" id="newStudentContact" class="mt-1 block w-full rounded-lg border border-gray-300 dark:border-gray-600 px-4 py-2 bg-gray-50 dark:bg-gray-700">
+                        </div>
+                        <button type="submit" class="w-full bg-blue-600 text-white rounded-lg px-4 py-2 hover:bg-blue-700 transition-colors duration-200">Add Student</button>
+                    </form>
+                    <div id="addStudentMessage" class="text-sm font-medium"></div>
+                </section>
+            </main>
+        </div>
+    </div>
+    <script type="module" src="supabase.js"></script>
+    <script type="module" src="app.js"></script>
+</body>
+</html>
+

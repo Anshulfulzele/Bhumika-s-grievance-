@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance App</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
+
+    <div class="min-h-screen flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl w-full max-w-lg p-8 space-y-8 transform transition-transform duration-300 hover:scale-105">
+            <div class="flex items-center justify-center space-x-2">
+                <i class="fa-solid fa-clipboard-user text-4xl text-blue-500"></i>
+                <h1 class="text-3xl font-bold">Attendance System</h1>
+            </div>
+
+            <div class="flex justify-center mb-6">
+                <button id="loginTab" class="py-2 px-6 font-semibold rounded-full focus:outline-none transition-all duration-300 bg-blue-500 text-white shadow-md">Login</button>
+                <button id="signupTab" class="py-2 px-6 font-semibold rounded-full focus:outline-none transition-all duration-300 hover:bg-gray-200 dark:hover:bg-gray-700">Signup</button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" class="space-y-6">
+                <div>
+                    <label for="loginEmail" class="block text-sm font-medium">Email</label>
+                    <input type="email" id="loginEmail" class="mt-1 block w-full rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-blue-500 focus:border-blue-500 bg-gray-50 dark:bg-gray-700 px-4 py-2" required>
+                </div>
+                <div>
+                    <label for="loginPassword" class="block text-sm font-medium">Password</label>
+                    <input type="password" id="loginPassword" class="mt-1 block w-full rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-blue-500 focus:border-blue-500 bg-gray-50 dark:bg-gray-700 px-4 py-2" required>
+                </div>
+                <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-300">Login</button>
+            </form>
+
+            <!-- Signup Form -->
+            <form id="signupForm" class="hidden space-y-6">
+                <div>
+                    <label for="signupName" class="block text-sm font-medium">Full Name</label>
+                    <input type="text" id="signupName" class="mt-1 block w-full rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-blue-500 focus:border-blue-500 bg-gray-50 dark:bg-gray-700 px-4 py-2" required>
+                </div>
+                <div>
+                    <label for="signupEmail" class="block text-sm font-medium">Email</label>
+                    <input type="email" id="signupEmail" class="mt-1 block w-full rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-blue-500 focus:border-blue-500 bg-gray-50 dark:bg-gray-700 px-4 py-2" required>
+                </div>
+                <div>
+                    <label for="signupPassword" class="block text-sm font-medium">Password</label>
+                    <input type="password" id="signupPassword" class="mt-1 block w-full rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-blue-500 focus:border-blue-500 bg-gray-50 dark:bg-gray-700 px-4 py-2" required>
+                </div>
+                <div>
+                    <label for="signupRole" class="block text-sm font-medium">Role</label>
+                    <select id="signupRole" class="mt-1 block w-full rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-blue-500 focus:border-blue-500 bg-gray-50 dark:bg-gray-700 px-4 py-2" required>
+                        <option value="teacher">Teacher</option>
+                        <option value="student">Student</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-300">Signup</button>
+            </form>
+
+            <div id="message" class="text-center mt-4 text-sm font-medium"></div>
+        </div>
+    </div>
+    <script type="module" src="supabase.js"></script>
+    <script type="module" src="app.js"></script>
+</body>
+</html>
+

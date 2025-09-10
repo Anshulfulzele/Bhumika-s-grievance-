@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Base colors for a polished light and dark mode */
+:root {
+    --bg-light: #F0F4F8;
+    --text-light: #212B36;
+    --card-bg-light: #ffffff;
+    --border-light: #E0E0E0;
+
+    --bg-dark: #121212;
+    --text-dark: #E0E0E0;
+    --card-bg-dark: #1E1E1E;
+    --border-dark: #404040;
+}
+
+/* Light mode styles */
+body.light-mode {
+    background-color: var(--bg-light);
+    color: var(--text-light);
+}
+
+.light-mode .bg-white { background-color: var(--card-bg-light); }
+.light-mode .bg-gray-100 { background-color: var(--bg-light); }
+.light-mode .bg-gray-800 { background-color: var(--card-bg-dark); }
+.light-mode .text-gray-800 { color: var(--text-light); }
+.light-mode .border-gray-300 { border-color: var(--border-light); }
+.light-mode .bg-gray-50 { background-color: #F8F9FA; }
+.light-mode .bg-blue-600 { background-color: #3498db; }
+.light-mode .hover\\:bg-blue-700:hover { background-color: #2980b9; }
+
+/* Dark mode styles */
+body.dark-mode {
+    background-color: var(--bg-dark);
+    color: var(--text-dark);
+}
+
+.dark-mode .bg-white { background-color: var(--card-bg-dark); }
+.dark-mode .bg-gray-100 { background-color: var(--bg-dark); }
+.dark-mode .bg-gray-800 { background-color: var(--card-bg-dark); }
+.dark-mode .text-gray-200 { color: var(--text-dark); }
+.dark-mode .border-gray-600 { border-color: var(--border-dark); }
+.dark-mode .bg-gray-700 { background-color: #333333; }
+.dark-mode .bg-gray-900 { background-color: #121212; }
+.dark-mode .bg-blue-600 { background-color: #4a90e2; }
+.dark-mode .hover\\:bg-blue-700:hover { background-color: #357bd9; }
+
+/* Custom styles for the app */
+.sidebar-toggle-button {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 100;
+}
+
+/* Responsive sidebar */
+@media (max-width: 767px) {
+    #sidebar {
+        transform: translateX(-100%);
+    }
+    #sidebar.open {
+        transform: translateX(0);
+    }
+    body.sidebar-open {
+        overflow: hidden;
+    }
+}
